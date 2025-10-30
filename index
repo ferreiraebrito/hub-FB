@@ -51,18 +51,11 @@
             gap: 15px; 
         }
 
-        /*
-         * ======================================
-         * === BOTÕES MAIORES (AQUI) ===
-         * ======================================
-         */
         #navbar button {
             background-color: #e0e7ef; 
             color: #2c3e50;
             border: 1px solid #ccd6dd;
-            /* Padding vertical aumentado de 14px para 18px */
             padding: 18px 25px; 
-            /* Fonte ligeiramente aumentada */
             font-size: 17px; 
             font-weight: 600;
             border-radius: 8px;
@@ -87,17 +80,14 @@
         @media (max-width: 600px) {
             #navbar {
                 padding: 10px;
-                gap: 10px; /* Espaço menor entre botões no celular */
+                gap: 10px; 
             }
             #navbar button {
-                /* Em telas pequenas, deixa os botões crescerem
-                   e se adaptarem, mantendo a altura */
                 flex-grow: 1;
-                flex-basis: 120px; /* Tamanho base antes de crescer */
-                padding: 16px 10px; /* Altura mantida, padding lateral reduzido */
+                flex-basis: 120px; 
+                padding: 16px 10px; 
             }
         }
-        
     </style>
 </head>
 
@@ -115,6 +105,7 @@
         </div>
         
     <script>
+        // As URLs dos seus apps continuam sendo as do Apps Script
         const APP_URLS = {
             cliente: "https://script.google.com/macros/s/AKfycbxKLrGyELjMQDk8NHMa6yXazObTLJnXhGUag0H_JQ_YgSY6PWp3sULKC-4Ypvz9Jl_L0Q/exec",
             armazem: "https://script.google.com/macros/s/AKfycbyab_sgqJiVLi12LUmapzIwvC8l-T4e19NR9xgTBmzQwRSRrbD6zjqSvEo2mutMP_UA/exec",
