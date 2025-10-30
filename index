@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <base target="_top">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://i.postimg.cc/JnsMVdFJ/favicon-32x32.png">
+    <meta name="theme-color" content="#FFFFFF">
+    <title>Hub de Aplicações - F&B</title>
+
+    <style>
+        /* === Reset e base === */
+        * { box-sizing: border-box; }
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            font-family: 'Segoe UI', sans-serif;
+            overflow: hidden; 
+            display: flex;
+            flex-direction: column;
+            background-color: #D9D9D9; 
+        }
+        
+        /* === Área de Conteúdo (Iframe) === */
+        #content {
+            flex-grow: 1; 
+            width: 100%;
+            border: none;
+        }
+        
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* === Barra de Navegação Inferior === */
+        #navbar {
+            width: 100%;
+            flex-shrink: 0; 
+            background-color: #ffffff;
+            border-top: 1px solid #888888; 
+            padding: 12px 20px; 
+            display: flex;
+            flex-direction: row; 
+            justify-content: center; 
+            align-items: center;
+            flex-wrap: wrap; 
+            gap: 15px; 
+        }
+
+        /*
+         * ======================================
+         * === BOTÕES MAIORES (AQUI) ===
+         * ======================================
+         */
+        #navbar button {
+            background-color: #e0e7ef; 
+            color: #2c3e50;
+            border: 1px solid #ccd6dd;
+            /* Padding vertical aumentado de 14px para 18px */
+            padding: 18px 25px; 
+            /* Fonte ligeiramente aumentada */
+            font-size: 17px; 
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center; 
+        }
+        
+        #navbar button:hover {
+            background-color: #d0dbe8;
+            transform: translateY(-1px);
+        }
+        
+        #navbar button.ativo {
+            background-color: #3498db; 
+            color: white;
+            border-color: #2980b9;
+            font-weight: bold;
+        }
+        
+        /* Media query para celulares */
+        @media (max-width: 600px) {
+            #navbar {
+                padding: 10px;
+                gap: 10px; /* Espaço menor entre botões no celular */
+            }
+            #navbar button {
+                /* Em telas pequenas, deixa os botões crescerem
+                   e se adaptarem, mantendo a altura */
+                flex-grow: 1;
+                flex-basis: 120px; /* Tamanho base antes de crescer */
+                padding: 16px 10px; /* Altura mantida, padding lateral reduzido */
+            }
+        }
+        
+    </style>
+</head>
+
+<body>
+
+    <div id="content">
+        <iframe id="appFrame" title="Aplicação Embutida"></iframe>
+    </div>
+    
+    <div id="navbar">
+        <button type="button" class="ativo" data-app-key="armazem">Painel do Armazém</button>
+        <button type="button" data-app-key="recebimento">Recebimento</button>
+        <button type="button" data-app-key="manutencao">Manutenção</button>
+
+        </div>
+        
+    <script>
+        const APP_URLS = {
+            cliente: "https://script.google.com/macros/s/AKfycbxKLrGyELjMQDk8NHMa6yXazObTLJnXhGUag0H_JQ_YgSY6PWp3sULKC-4Ypvz9Jl_L0Q/exec",
+            armazem: "https://script.google.com/macros/s/AKfycbyab_sgqJiVLi12LUmapzIwvC8l-T4e19NR9xgTBmzQwRSRrbD6zjqSvEo2mutMP_UA/exec",
+            manutencao: "https://script.google.com/macros/s/AKfycbxjp_5JjVFjaqCzwLTuvIl-8BKM6w0rRV2hHZhOBKlgtSbojfMaLf2h7EwWwK7hwaJ8/exec",
+            recebimento: "https://script.google.com/macros/s/AKfycby0Kfn5hKWYraZeLncpMYL_QoeYcbeOUuhhARxS57GtRzzunY06kL2Jcx9_D6ul5nlY/exec"
+        };
+        const iframe = document.getElementById('appFrame');
+        const navContainer = document.getElementById('navbar'); 
+        const navBotoes = navContainer.querySelectorAll('button');
+
+        function loadApp(appKey) {
+            const url = APP_URLS[appKey];
+            if (!url) { console.error("URL não encontrada para a chave:", appKey); return; }
+            iframe.src = url;
+            navBotoes.forEach(btn => {
+                btn.classList.toggle('ativo', btn.dataset.appKey === appKey);
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            navBotoes.forEach(btn => {
+                btn.addEventListener('click', () => { 
+                    if(btn.dataset.appKey) {
+                        loadApp(btn.dataset.appKey); 
+                    }
+                });
+            });
+            
+            loadApp('armazem');
+        });
+    </script>
+
+</body>
+</html>
