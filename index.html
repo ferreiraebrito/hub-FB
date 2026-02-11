@@ -86,12 +86,12 @@
         /* === HEADER SUPERIOR (Responsivo) === */
         #top-header {
             width: 100%;
-            height: 60px;
+            height: 70px; /* Aumentado para acomodar logo maior */
             background-color: #ffffff;
             display: flex;
             align-items: center;
             /* Mobile: Centraliza o conteúdo (logo) */
-            justify-content: center;
+            justify-content: center; 
             padding: 0 20px;
             box-shadow: 0 1px 5px rgba(0,0,0,0.05);
             z-index: 100;
@@ -101,24 +101,13 @@
         .header-brand {
             display: flex;
             align-items: center;
-            /* Mobile: Sem gap para centralizar perfeitamente só a imagem */
             gap: 0; 
         }
 
         .header-logo {
-            height: 35px;
+            height: 50px; /* Aumentado (era 35px) */
             width: auto;
-            /* Garante que a imagem não estique */
             display: block; 
-        }
-
-        .header-title {
-            /* Mobile: Esconde o nome */
-            display: none;
-            font-size: 18px;
-            font-weight: 700;
-            color: #1e293b;
-            letter-spacing: -0.5px;
         }
 
         /* === Área de Conteúdo (Iframes) === */
@@ -209,16 +198,7 @@
         @media (min-width: 768px) {
             /* Header Superior no Desktop */
             #top-header {
-                /* Volta a alinhar a esquerda */
-                justify-content: flex-start; 
-            }
-            .header-brand {
-                 /* Adiciona espaço entre logo e texto */
-                gap: 12px;
-            }
-            .header-title {
-                /* Mostra o nome da empresa */
-                display: block; 
+                justify-content: flex-start; /* Alinha a esquerda no PC */
             }
 
             /* Navbar inferior no Desktop */
@@ -243,7 +223,6 @@
         <div id="top-header">
             <div class="header-brand">
                 <img src="https://i.postimg.cc/RF8h0M0M/logo-horizontal.jpg" class="header-logo" alt="Logo">
-                <span class="header-title">Ferreira & Brito</span>
             </div>
         </div>
 
