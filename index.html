@@ -47,8 +47,8 @@
             width: 100%;
             height: 100%;
             background-color: rgba(255, 255, 255, 0.8);
-            z-index: 50; /* Fica acima do iframe, abaixo do navbar */
-            display: none; /* Escondido por padrão */
+            z-index: 50;
+            display: none;
             justify-content: center;
             align-items: center;
             flex-direction: column;
@@ -77,32 +77,63 @@
             height: 100%;
             width: 100%;
             display: flex;
-            flex-direction: column;
+            flex-direction: column; /* Organiza Topo, Conteúdo e Navbar em coluna */
             visibility: hidden;
         }
         
         #splash-screen.hidden + .app-container { visibility: visible; }
 
+        /* === NOVO: HEADER SUPERIOR === */
+        #top-header {
+            width: 100%;
+            height: 60px; /* Altura fixa da barra */
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.05); /* Sombra suave */
+            z-index: 100;
+            flex-shrink: 0; /* Impede que a barra encolha */
+            justify-content: space-between;
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-logo {
+            height: 35px; /* Tamanho da logo na barra */
+            width: auto;
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1e293b;
+            letter-spacing: -0.5px;
+        }
+
         /* === Área de Conteúdo (Iframes) === */
         #content {
-            flex-grow: 1; 
+            flex-grow: 1; /* Ocupa todo o espaço restante entre o header e o navbar */
             width: 100%;
             border: none;
             overflow: hidden;
-            background: white;
-            position: relative; /* Importante para posicionar os iframes */
+            background: #f8fafc;
+            position: relative;
         }
         
-        /* Classe para os iframes gerados dinamicamente */
         .app-iframe {
             width: 100%;
             height: 100%;
             border: none;
-            display: none; /* Todos começam escondidos */
+            display: none;
         }
         
         .app-iframe.active {
-            display: block; /* Só o ativo aparece */
+            display: block;
         }
 
         /* === NAVBAR (Dark Mode Fixo) === */
@@ -186,6 +217,14 @@
     </div>
 
     <div class="app-container">
+        
+        <div id="top-header">
+            <div class="header-brand">
+                <img src="https://i.postimg.cc/RF8h0M0M/logo-horizontal.jpg" class="header-logo" alt="Logo">
+                <span class="header-title">Ferreira & Brito</span>
+            </div>
+        </div>
+
         <div id="content">
             <div id="loader-overlay">
                 <div class="spinner"></div>
@@ -231,11 +270,9 @@
         const navBotoes = navContainer.querySelectorAll('button');
         const loader = document.getElementById('loader-overlay');
         
-        // Objeto para guardar quais iframes já foram criados
         const loadedApps = {};
 
         function loadApp(appKey) {
-            // 1. Atualiza visual dos botões
             navBotoes.forEach(btn => {
                 const isActive = btn.dataset.appKey === appKey;
                 btn.classList.toggle('ativo', isActive);
@@ -245,17 +282,13 @@
                     : "'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24";
             });
 
-            // 2. Esconde todos os iframes atuais
             document.querySelectorAll('.app-iframe').forEach(frame => {
                 frame.classList.remove('active');
             });
 
-            // 3. Verifica se o app já existe na memória (CACHE)
             if (loadedApps[appKey]) {
-                // Se já existe, apenas mostra (Instantâneo!)
                 loadedApps[appKey].classList.add('active');
             } else {
-                // Se não existe, cria um novo (Lento, precisa de loading)
                 showLoader();
                 
                 const newIframe = document.createElement('iframe');
@@ -263,13 +296,12 @@
                 newIframe.className = 'app-iframe active';
                 newIframe.title = appKey;
                 
-                // Quando terminar de carregar, remove o spinner
                 newIframe.onload = () => {
                     hideLoader();
                 };
 
                 contentDiv.appendChild(newIframe);
-                loadedApps[appKey] = newIframe; // Salva no cache
+                loadedApps[appKey] = newIframe; 
             }
         }
 
@@ -282,7 +314,6 @@
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            // Configura cliques
             navBotoes.forEach(btn => {
                 btn.addEventListener('click', () => { 
                     if(btn.dataset.appKey) {
@@ -292,10 +323,9 @@
             });
             
             // Inicia com Armazem
-            // Nota: O primeiro load não mostra spinner pois está atrás da Splash Screen
             loadApp('armazem');
 
-            // Remove Splash Screen após 4s
+            // Remove Splash Screen
             const splash = document.getElementById('splash-screen');
             setTimeout(() => {
                 splash.classList.add('hidden');
