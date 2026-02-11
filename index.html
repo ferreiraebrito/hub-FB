@@ -3,12 +3,9 @@
 <head>
     <base target="_top">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Hub de Aplicações - F&B</title>
-    <meta name="theme-color" content="#FFFFFF">
-    <link rel="manifest" href="manifest.json">
-    
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <meta name="theme-color" content="#1e293b"> <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
 
     <style>
         /* === Reset e base === */
@@ -20,7 +17,7 @@
             width: 100%;
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             overflow: hidden; 
-            background-color: #f0f2f5; 
+            background-color: #f1f5f9; /* Fundo geral cinza claro */
         }
 
         /* === SPLASH SCREEN === */
@@ -40,7 +37,7 @@
         }
 
         #splash-screen img {
-            max-width: 200px; /* Levemente menor para mobile */
+            max-width: 200px;
             width: 70%;
             height: auto;
         }
@@ -80,84 +77,120 @@
             display: block;
         }
 
-        /* === BARRA DE NAVEGAÇÃO MODERNA (Estilo App Nativo) === */
+        /* * ============================================================
+         * === BARRA DE NAVEGAÇÃO ESCURA (ALTO CONTRASTE) ===
+         * ============================================================
+         */
         #navbar {
             width: 100%;
             flex-shrink: 0; 
-            background-color: #ffffff;
-            border-top: 1px solid #e0e0e0; 
-            padding-bottom: env(safe-area-inset-bottom); /* Respeita a área do iPhone X+ */
+            
+            /* COR ESCURA PARA CONTRASTE FORTE */
+            background-color: #1e293b; /* Slate Dark Blue */
+            
+            /* Ajustes para Telas Curvas e iPhone X+ */
+            padding-bottom: max(10px, env(safe-area-inset-bottom)); 
+            padding-top: 10px;
+            /* Margem lateral extra para evitar bordas curvas */
+            padding-left: 24px; 
+            padding-right: 24px;
+
             display: flex;
             flex-direction: row; 
-            justify-content: space-around; /* Distribui igualmente */
+            justify-content: space-between; /* Espalha os botões respeitando o padding */
             align-items: center;
-            height: 70px; /* Altura fixa para consistência */
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.03);
+            
+            height: 75px; /* Altura confortável */
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.2); /* Sombra para dar profundidade */
+            z-index: 100;
         }
 
         #navbar button {
             background: transparent; 
-            color: #94a3b8; /* Cor inativa (cinza suave) */
+            color: #94a3b8; /* Cinza claro (inativo) */
             border: none;
-            padding: 8px 4px; 
-            font-size: 11px; 
+            padding: 0;
+            font-size: 10px; 
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             text-align: center; 
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            flex: 1; /* Ocupa espaço igual */
-            height: 100%;
-            max-width: 100px; /* Impede que fiquem muito largos em desktop */
+            
+            /* Tamanho fixo do toque para evitar erros */
+            width: 60px; 
+            position: relative;
         }
 
         /* Estilo do Ícone */
         #navbar button .material-symbols-rounded {
-            font-size: 24px;
-            margin-bottom: 4px;
-            transition: transform 0.2s ease;
+            font-size: 26px; /* Ícone levemente maior */
+            margin-bottom: 5px;
+            transition: transform 0.2s ease, color 0.2s ease;
         }
         
-        #navbar button:hover {
-            background-color: #f8fafc;
+        /* Efeito de toque */
+        #navbar button:active {
+            transform: scale(0.95);
         }
 
-        /* === ESTADO ATIVO === */
+        /* === ESTADO ATIVO (Selecionado) === */
         #navbar button.ativo {
-            color: #2563eb; /* Azul App */
+            color: #60a5fa; /* Azul claro neon para contrastar com o fundo escuro */
         }
         
         #navbar button.ativo .material-symbols-rounded {
-            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; /* Preenche o ícone */
-            transform: translateY(-2px);
-            color: #2563eb;
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            transform: translateY(-3px); /* Flutua um pouco para cima */
+            color: #60a5fa;
+            text-shadow: 0 0 15px rgba(96, 165, 250, 0.4); /* Brilho suave */
+        }
+        
+        /* Indicador visual (bolinha) embaixo do ícone ativo */
+        #navbar button.ativo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px; /* Ajuste fino */
+            width: 4px;
+            height: 4px;
+            background-color: #60a5fa;
+            border-radius: 50%;
+            opacity: 1;
         }
 
-        /* Ajustes específicos para Desktop (se a tela for grande) */
+        /* Ajustes Desktop */
         @media (min-width: 768px) {
             #navbar {
                 height: 80px;
                 justify-content: center;
-                gap: 20px;
+                gap: 30px;
+                background-color: #ffffff; /* Volta a ser branco no Desktop se preferir, ou mantenha escuro */
+                box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+                border-top: 1px solid #e2e8f0;
             }
             #navbar button {
-                flex-direction: row; /* Ícone ao lado do texto no PC */
-                gap: 8px;
-                font-size: 14px;
+                flex-direction: row;
+                gap: 10px;
+                width: auto;
                 padding: 10px 20px;
-                border-radius: 12px;
-                max-width: none;
-                flex: 0 1 auto;
-            }
-            #navbar button .material-symbols-rounded {
-                margin-bottom: 0;
+                font-size: 14px;
+                color: #64748b;
             }
             #navbar button.ativo {
                 background-color: #eff6ff;
-                color: #1d4ed8;
+                color: #2563eb;
+                border-radius: 8px;
+            }
+            #navbar button.ativo .material-symbols-rounded {
+                color: #2563eb;
+                text-shadow: none;
+                transform: none;
+            }
+            #navbar button.ativo::after {
+                display: none;
             }
         }
     </style>
@@ -177,7 +210,8 @@
         <div id="navbar">
             <button type="button" class="ativo" data-app-key="armazem">
                 <span class="material-symbols-rounded">warehouse</span>
-                <span>Armazém</span> </button>
+                <span>Armazém</span>
+            </button>
             
             <button type="button" data-app-key="recebimento">
                 <span class="material-symbols-rounded">local_shipping</span>
@@ -220,12 +254,10 @@
             if (!url) { console.error("URL não encontrada para a chave:", appKey); return; }
             iframe.src = url;
             
-            // Remove classe ativo de todos e adiciona no clicado
             navBotoes.forEach(btn => {
                 const isActive = btn.dataset.appKey === appKey;
                 btn.classList.toggle('ativo', isActive);
                 
-                // Acessibilidade e Estilo do Ícone (Preenchido vs Contorno)
                 const icon = btn.querySelector('.material-symbols-rounded');
                 if(isActive) {
                     icon.style.fontVariationSettings = "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24";
@@ -236,7 +268,6 @@
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            // Lógica dos botões
             navBotoes.forEach(btn => {
                 btn.addEventListener('click', () => { 
                     if(btn.dataset.appKey) {
@@ -245,19 +276,15 @@
                 });
             });
             
-            // Carrega o primeiro app
             loadApp('armazem');
 
-            // Lógica Splash Screen
             const splash = document.getElementById('splash-screen');
-            const splashDuration = 4000; 
-
             setTimeout(() => {
                 splash.classList.add('hidden');
                 setTimeout(() => {
                     splash.style.display = 'none';
                 }, 500); 
-            }, splashDuration);
+            }, 4000);
         });
     </script>
 
