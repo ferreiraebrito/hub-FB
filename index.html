@@ -3,147 +3,194 @@
 <head>
     <base target="_top">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Hub de Aplicações - F&B</title>
-    <meta name="theme-color" content="#FFFFFF">
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://i.postimg.cc/rmDMXYHr/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://i.postimg.cc/JnsMVdFJ/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://i.postimg.cc/FRYN5n6S/favicon-16x16.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="https://i.postimg.cc/SKTkPpgW/android-chrome-192x192.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="https://i.postimg.cc/638tJ1Pn/android-chrome-512x512.png">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="white">
+    <meta name="theme-color" content="#1e293b"> <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
 
     <style>
         /* === Reset e base === */
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         html, body {
             margin: 0;
             padding: 0;
             height: 100%;
             width: 100%;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             overflow: hidden; 
-            background-color: #D9D9D9; 
+            background-color: #f1f5f9; /* Fundo geral cinza claro */
         }
 
-        /*
-        * ======================================
-        * === NOVO: SPLASH SCREEN (TELA DE ABERTURA) ===
-        * ======================================
-        */
+        /* === SPLASH SCREEN === */
         #splash-screen {
-            position: fixed; /* Cobre a tela inteira */
+            position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background-color: #ffffff; /* Fundo branco */
-            z-index: 9999; /* Fica por cima de tudo */
-
-            /* Centraliza a logo */
+            background-color: #ffffff;
+            z-index: 9999;
             display: flex;
             justify-content: center;
             align-items: center;
-
-            /* Transição de fade-out */
             transition: opacity 0.5s ease-out;
             opacity: 1;
         }
 
         #splash-screen img {
-            max-width: 250px; /* Um bom tamanho para a logo na abertura */
+            max-width: 200px;
+            width: 70%;
             height: auto;
         }
 
-        /* Classe que será adicionada pelo JS para esconder o splash */
         #splash-screen.hidden {
             opacity: 0;
-            pointer-events: none; /* Impede cliques durante o fade */
+            pointer-events: none;
         }
-        /* ======================================
-        * === FIM DO SPLASH SCREEN ===
-        * ======================================
-        */
 
-
-        /* Layout do App (agora controlado por 'display: none' inicial) */
+        /* === Layout Principal === */
         .app-container {
             height: 100%;
             width: 100%;
             display: flex;
             flex-direction: column;
-            visibility: hidden; /* Começa invisível */
+            visibility: hidden;
         }
         
         #splash-screen.hidden + .app-container {
-            visibility: visible; /* Fica visível após o splash sumir */
+            visibility: visible;
         }
 
-        /* === Área de Conteúdo (Iframe) === */
+        /* === Iframe Area === */
         #content {
             flex-grow: 1; 
             width: 100%;
             border: none;
+            overflow: hidden;
+            background: white;
+            position: relative;
         }
         
         iframe {
             width: 100%;
             height: 100%;
             border: none;
+            display: block;
         }
 
-        /* === Barra de Navegação Inferior === */
+        /* * ============================================================
+         * === BARRA DE NAVEGAÇÃO ESCURA (ALTO CONTRASTE) ===
+         * ============================================================
+         */
         #navbar {
             width: 100%;
             flex-shrink: 0; 
-            background-color: #ffffff;
-            border-top: 1px solid #888888; 
-            padding: 12px 20px; 
+            
+            /* COR ESCURA PARA CONTRASTE FORTE */
+            background-color: #1e293b; /* Slate Dark Blue */
+            
+            /* Ajustes para Telas Curvas e iPhone X+ */
+            padding-bottom: max(10px, env(safe-area-inset-bottom)); 
+            padding-top: 10px;
+            /* Margem lateral extra para evitar bordas curvas */
+            padding-left: 24px; 
+            padding-right: 24px;
+
             display: flex;
             flex-direction: row; 
-            justify-content: center; 
+            justify-content: space-between; /* Espalha os botões respeitando o padding */
             align-items: center;
-            flex-wrap: wrap; 
-            gap: 15px; 
+            
+            height: 75px; /* Altura confortável */
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.2); /* Sombra para dar profundidade */
+            z-index: 100;
         }
 
         #navbar button {
-            background-color: #e0e7ef; 
-            color: #2c3e50;
-            border: 1px solid #ccd6dd;
-            padding: 18px 25px; 
-            font-size: 17px; 
-            font-weight: 600;
-            border-radius: 8px;
+            background: transparent; 
+            color: #94a3b8; /* Cinza claro (inativo) */
+            border: none;
+            padding: 0;
+            font-size: 10px; 
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             text-align: center; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            
+            /* Tamanho fixo do toque para evitar erros */
+            width: 60px; 
+            position: relative;
+        }
+
+        /* Estilo do Ícone */
+        #navbar button .material-symbols-rounded {
+            font-size: 26px; /* Ícone levemente maior */
+            margin-bottom: 5px;
+            transition: transform 0.2s ease, color 0.2s ease;
         }
         
-        #navbar button:hover {
-            background-color: #d0dbe8;
-            transform: translateY(-1px);
+        /* Efeito de toque */
+        #navbar button:active {
+            transform: scale(0.95);
         }
-        
+
+        /* === ESTADO ATIVO (Selecionado) === */
         #navbar button.ativo {
-            background-color: #3498db; 
-            color: white;
-            border-color: #2980b9;
-            font-weight: bold;
+            color: #60a5fa; /* Azul claro neon para contrastar com o fundo escuro */
         }
         
-        /* Media query para celulares */
-        @media (max-width: 600px) {
+        #navbar button.ativo .material-symbols-rounded {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            transform: translateY(-3px); /* Flutua um pouco para cima */
+            color: #60a5fa;
+            text-shadow: 0 0 15px rgba(96, 165, 250, 0.4); /* Brilho suave */
+        }
+        
+        /* Indicador visual (bolinha) embaixo do ícone ativo */
+        #navbar button.ativo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px; /* Ajuste fino */
+            width: 4px;
+            height: 4px;
+            background-color: #60a5fa;
+            border-radius: 50%;
+            opacity: 1;
+        }
+
+        /* Ajustes Desktop */
+        @media (min-width: 768px) {
             #navbar {
-                padding: 10px;
-                gap: 10px; 
+                height: 80px;
+                justify-content: center;
+                gap: 30px;
+                background-color: #ffffff; /* Volta a ser branco no Desktop se preferir, ou mantenha escuro */
+                box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+                border-top: 1px solid #e2e8f0;
             }
             #navbar button {
-                flex-grow: 1;
-                flex-basis: 120px; 
-                padding: 16px 10px; 
+                flex-direction: row;
+                gap: 10px;
+                width: auto;
+                padding: 10px 20px;
+                font-size: 14px;
+                color: #64748b;
+            }
+            #navbar button.ativo {
+                background-color: #eff6ff;
+                color: #2563eb;
+                border-radius: 8px;
+            }
+            #navbar button.ativo .material-symbols-rounded {
+                color: #2563eb;
+                text-shadow: none;
+                transform: none;
+            }
+            #navbar button.ativo::after {
+                display: none;
             }
         }
     </style>
@@ -180,6 +227,44 @@ const APP_URLS = {
     // AQUI ESTÁ A NOVA LINHA:
     horas_extras: "https://script.google.com/macros/s/AKfycbzOY_DDE7i6mo1dX-2cVMQlyDvWAjsJAYf9D0xaon5J-vCLuuWRrlT2OGs0DIrH0fsyKg/exec"
 };
+        <div id="navbar">
+            <button type="button" class="ativo" data-app-key="armazem">
+                <span class="material-symbols-rounded">warehouse</span>
+                <span>Armazém</span>
+            </button>
+            
+            <button type="button" data-app-key="recebimento">
+                <span class="material-symbols-rounded">local_shipping</span>
+                <span>Receb.</span>
+            </button>
+            
+            <button type="button" data-app-key="manutencao">
+                <span class="material-symbols-rounded">build</span>
+                <span>Manut.</span>
+            </button>
+            
+            <button type="button" data-app-key="horas_extras">
+                <span class="material-symbols-rounded">av_timer</span>
+                <span>Horas</span>
+            </button>
+            
+            <button type="button" data-app-key="financeiro">
+                <span class="material-symbols-rounded">attach_money</span>
+                <span>Finan.</span>
+            </button>
+        </div>
+    </div>
+        
+    <script>
+        const APP_URLS = {
+            cliente: "https://script.google.com/macros/s/AKfycbxKLrGyELjMQDk8NHMa6yXazObTLJnXhGUag0H_JQ_YgSY6PWp3sULKC-4Ypvz9Jl_L0Q/exec",
+            armazem: "https://script.google.com/macros/s/AKfycbyab_sgqJiVLi12LUmapzIwvC8l-T4e19NR9xgTBmzQwRSRrbD6zjqSvEo2mutMP_UA/exec",
+            manutencao: "https://script.google.com/macros/s/AKfycbxjp_5JjVFjaqCzwLTuvIl-8BKM6w0rRV2hHZhOBKlgtSbojfMaLf2h7EwWwK7hwaJ8/exec",
+            recebimento: "https://script.google.com/macros/s/AKfycby0Kfn5hKWYraZeLncpMYL_QoeYcbeOUuhhARxS57GtRzzunY06kL2Jcx9_D6ul5nlY/exec",
+            horas_extras: "https://script.google.com/macros/s/AKfycbzOY_DDE7i6mo1dX-2cVMQlyDvWAjsJAYf9D0xaon5J-vCLuuWRrlT2OGs0DIrH0fsyKg/exec",
+            financeiro: "https://script.google.com/macros/s/AKfycbwbIFpn8L9PpF8_-X9cqIKtECKCdH55Ta2PDnRLVf6oP3wXlBTao3eDg5VKofta5e2y/exec"
+        };
+        
         const iframe = document.getElementById('appFrame');
         const navContainer = document.getElementById('navbar'); 
         const navBotoes = navContainer.querySelectorAll('button');
@@ -188,13 +273,21 @@ const APP_URLS = {
             const url = APP_URLS[appKey];
             if (!url) { console.error("URL não encontrada para a chave:", appKey); return; }
             iframe.src = url;
+            
             navBotoes.forEach(btn => {
-                btn.classList.toggle('ativo', btn.dataset.appKey === appKey);
+                const isActive = btn.dataset.appKey === appKey;
+                btn.classList.toggle('ativo', isActive);
+                
+                const icon = btn.querySelector('.material-symbols-rounded');
+                if(isActive) {
+                    icon.style.fontVariationSettings = "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24";
+                } else {
+                    icon.style.fontVariationSettings = "'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24";
+                }
             });
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            // Lógica dos botões
             navBotoes.forEach(btn => {
                 btn.addEventListener('click', () => { 
                     if(btn.dataset.appKey) {
@@ -203,28 +296,15 @@ const APP_URLS = {
                 });
             });
             
-            // Carrega o primeiro app no iframe (isso acontece "atrás" do splash)
             loadApp('armazem');
 
-            //
-            // ======================================
-            // === NOVO: LÓGICA DO SPLASH SCREEN ===
-            // ======================================
-            //
             const splash = document.getElementById('splash-screen');
-            const splashDuration = 4000; // 4 segundos, como você pediu
-
             setTimeout(() => {
-                // Inicia o fade-out
                 splash.classList.add('hidden');
-                
-                // Remove o splash do layout *depois* que a animação de fade (500ms) terminar
                 setTimeout(() => {
                     splash.style.display = 'none';
-                }, 500); // 500ms é a duração da transição no CSS
-
-            }, splashDuration);
-
+                }, 500); 
+            }, 4000);
         });
     </script>
 
