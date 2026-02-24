@@ -217,23 +217,23 @@
 
     /* Navbar inferior no Desktop */
     #navbar { 
-        height: 70px; 
-        justify-content: center; /* Garante que o grupo de botões fique bem no centro */
-        gap: 5px; /* Espaço mínimo entre um botão e outro */
+        height: 75px; /* Altura padrão confortável para a barra */
+        justify-content: center; /* Mantém o grupo no centro da tela */
+        gap: 15px; /* Dá um respiro legal entre um botão e outro */
         border-top: 1px solid #334155; 
     }
 
     #navbar button { 
+        flex: 0 0 auto; /* Impede que fiquem gigantes e estiquem pelas laterais */
         flex-direction: row; 
-        flex: 0 0 auto; /* ISSO É O SEGREDO: impede o botão de esticar e ocupar espaço extra */
-        gap: 6px; 
+        gap: 8px; /* Distância entre o ícone e o texto */
         width: auto; 
         max-width: none; 
-        padding: 8px 12px; /* Bem menos largo que antes, mas suficiente para o fundo azul */
-        font-size: 13px; 
+        padding: 12px 24px; /* Aumentamos bem o preenchimento interno para dar altura e largura ao botão */
+        font-size: 15px; /* Fonte maior para melhor leitura no PC */
         color: #cbd5e1 !important; 
-        border-radius: 6px; 
-        height: fit-content; 
+        border-radius: 8px; 
+        min-height: 48px; /* Garante que o botão terá uma altura excelente para clique */
     }
 
     #navbar button:hover { 
@@ -250,7 +250,7 @@
     #navbar button.ativo .material-symbols-rounded { 
         transform: none; 
         text-shadow: none; 
-        font-size: 20px; 
+        font-size: 24px; /* Retornamos o ícone ao tamanho normal para não sumir */
     }
 
     #navbar button.ativo::after { 
