@@ -208,21 +208,53 @@
             border-radius: 50%;
         }
 
-        /* --- AJUSTES PARA DESKTOP (Telas maiores) --- */
-        @media (min-width: 768px) {
-            /* Header Superior no Desktop */
-            #top-header {
-                justify-content: flex-start; /* Alinha a esquerda no PC */
-            }
+/* --- AJUSTES PARA DESKTOP (Telas maiores) --- */
+@media (min-width: 768px) {
+    /* Header Superior no Desktop */
+    #top-header {
+        justify-content: flex-start; 
+    }
 
-            /* Navbar inferior no Desktop */
-            #navbar { height: 80px; justify-content: center; gap: 30px; border-top: 1px solid #334155; }
-            #navbar button { flex-direction: row; gap: 10px; width: auto; padding: 10px 20px; font-size: 14px; color: #cbd5e1 !important; }
-            #navbar button:hover { background-color: rgba(255, 255, 255, 0.05); border-radius: 8px; }
-            #navbar button.ativo { background-color: rgba(59, 130, 246, 0.2) !important; color: #60a5fa !important; border-radius: 8px; }
-            #navbar button.ativo .material-symbols-rounded { transform: none; }
-            #navbar button.ativo::after { display: none; }
-        }
+    /* Navbar inferior no Desktop */
+    #navbar { 
+        height: 80px; 
+        justify-content: center; 
+        gap: 15px; /* Reduzi um pouco o gap para caberem todos confortavelmente */
+        border-top: 1px solid #334155; 
+    }
+
+    #navbar button { 
+        flex-direction: row; 
+        gap: 10px; 
+        width: auto; 
+        max-width: none; /* Remove o limite de largura do mobile */
+        padding: 12px 24px; /* Aumentado para cobrir bem o texto e ícone */
+        font-size: 14px; 
+        color: #cbd5e1 !important; 
+        border-radius: 8px; /* Arredondamento suave */
+        height: fit-content; /* Garante que o fundo envolva o conteúdo */
+    }
+
+    #navbar button:hover { 
+        background-color: rgba(255, 255, 255, 0.05); 
+    }
+
+    /* Ajuste específico para o estado ATIVO no PC */
+    #navbar button.ativo { 
+        background-color: rgba(59, 130, 246, 0.2) !important; 
+        color: #60a5fa !important; 
+        box-shadow: 0 0 0 1px rgba(96, 165, 250, 0.3); /* Uma borda sutil em vez de sombra solta */
+    }
+
+    #navbar button.ativo .material-symbols-rounded { 
+        transform: none; 
+        text-shadow: none; /* Remove aquela sombra antiga que ficava apenas no ícone */
+    }
+
+    #navbar button.ativo::after { 
+        display: none; 
+    }
+}
     </style>
 </head>
 
