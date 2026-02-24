@@ -217,22 +217,22 @@
 
     /* Navbar inferior no Desktop */
     #navbar { 
-        height: 80px; 
+        height: 65px; /* Reduzido para não roubar muito espaço da tela */
         justify-content: center; 
-        gap: 15px; /* Reduzi um pouco o gap para caberem todos confortavelmente */
+        gap: 8px; /* Bem menor para aproximar os botões */
         border-top: 1px solid #334155; 
     }
 
     #navbar button { 
         flex-direction: row; 
-        gap: 10px; 
+        gap: 6px; /* Espaço menor entre o ícone e o texto dentro do botão */
         width: auto; 
-        max-width: none; /* Remove o limite de largura do mobile */
-        padding: 12px 24px; /* Aumentado para cobrir bem o texto e ícone */
-        font-size: 14px; 
+        max-width: none; 
+        padding: 8px 14px; /* Reduzido para diminuir o "corpo" do botão */
+        font-size: 13px; /* Fonte levemente menor para mais elegância */
         color: #cbd5e1 !important; 
-        border-radius: 8px; /* Arredondamento suave */
-        height: fit-content; /* Garante que o fundo envolva o conteúdo */
+        border-radius: 6px; /* Borda um pouco mais sutil */
+        height: fit-content; 
     }
 
     #navbar button:hover { 
@@ -243,12 +243,13 @@
     #navbar button.ativo { 
         background-color: rgba(59, 130, 246, 0.2) !important; 
         color: #60a5fa !important; 
-        box-shadow: 0 0 0 1px rgba(96, 165, 250, 0.3); /* Uma borda sutil em vez de sombra solta */
+        box-shadow: 0 0 0 1px rgba(96, 165, 250, 0.3); 
     }
 
     #navbar button.ativo .material-symbols-rounded { 
         transform: none; 
-        text-shadow: none; /* Remove aquela sombra antiga que ficava apenas no ícone */
+        text-shadow: none; 
+        font-size: 20px; /* Ícone levemente menor no PC para acompanhar o texto */
     }
 
     #navbar button.ativo::after { 
